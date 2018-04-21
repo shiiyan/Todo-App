@@ -1,0 +1,53 @@
+{% extends 'todo/base.html' %}
+
+{% block title %}
+	Todo index
+{% endblock %}
+	
+{% block content %}	
+	<!-- add Todo list start -->
+	<div class="section" id="searchform">
+		<p id="message">
+				新しいTodoリストを作成する：
+		</p>
+		<form action="{% url 'addtodolist' %}" method="POST" role="form">
+			{% csrf_token %}
+			<div class="search_bar">
+			    {{ form.text }}
+				<button type="submit" class="btn btn-default">リストの作成</button>
+			</div>
+		</form>
+	</div>
+	<!-- add Todo list end -->
+	
+	
+
+	<!-- todo list detail start -->
+	{% for todolist in todolists %}
+	<div class="section" id="">
+			{% if todolist.num_all %}
+			<a href="{% url 'detail' todolist.id %}"><h2>{{ todolist.todolist_text }}</h2></a>
+			<div>
+				
+				<p> 
+					{{ todolist.num_all }}個中の{{ todolist.num_completed }}個が完了しています。<br/>
+					{% if todolist.num_all > todolist.num_completed %}
+					進行中のTodoの中で最も近い期限は{{ todolist.latest_deadline }}です。
+					{% else %}
+					進行中のTodoはありません。
+					{% endif %}
+				</p>
+			</div>
+			{% else %}
+			<a href="{% url 'detail' todolist.id %}"><h2>{{ todolist.todolist_text }}</h2></a>
+			<div>
+				<p> 
+					Todoがありません。<br/>
+				</p>
+			</div>
+			{% endif %}
+	</div>
+	{% endfor %}
+	<!-- todo list detail end -->
+	
+{% endblock %}

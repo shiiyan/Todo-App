@@ -1,0 +1,21 @@
+{% extends 'todo/base.html' %}
+
+{% block title %}
+	Todo search
+{% endblock %}
+	
+{% block content %}	
+
+	<!-- search form start -->
+	<div class="section" id="searchform">
+		<form action="{% url 'searchresult' %}" method="POST" role="form">
+			{% csrf_token %}
+			<div class="search_bar">
+				{{ form.text }}
+				<button type="submit" class="btn btn-default">検索</button>
+			</div>
+		</form>
+	</div>
+	<!-- search form end -->
+
+{% endblock %}

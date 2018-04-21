@@ -1,0 +1,64 @@
+{% extends 'todo/base.html' %}
+
+{% block title %}
+	Todo search
+{% endblock %}
+	
+{% block content %}	
+
+	<!-- search form start -->
+	<div class="section" id="searchform">
+		<form action="{% url 'searchresult' %}" method="POST" role="form">
+			{% csrf_token %}
+			<div class="search_bar">
+				{{ form.text }}
+				<button type="submit" class="btn btn-default">検索</button>
+			</div>
+		</form>
+	</div>
+	<!-- search form end -->
+
+	<!-- todo result start -->
+	{% if todos %}
+	<p id="message">Todoが{{ todo_count }}件見つかりました：</p>
+	{% for todo in todos %}
+	<div class="section" id="">
+		<div class="todo_result" id="">
+			<p>
+			<a href="{% url 'detail' todo.todolist.id %}"><h2>{{ todo.todo_text }}</h2></a>
+			 <label>リスト：</label>{{ todo.todolist.todolist_text }}<br/>
+			 <label>期限：</label>{{ todo.deadline }}<br/>
+			 <label>作成日：</label>{{ todo.todo_create_date }}<br/>
+			</p>
+		</div>
+	</div>
+	{% endfor %}
+	{% else %}
+	<p id="error">
+		対象のTodoは見つかりませんでした！
+	</p>
+	{% endif %}
+	<!-- todo result end -->
+	<!-- todo list result start -->
+	{% if todolists %}
+	<p id="message">Todoリストが{{ todolist_count }}件見つかりました：</p>
+	{% for todolist in todolists %}
+	<div class="section" id="">
+		<div class="todo_list_result" id="">
+			<p>
+				<a href="{% url 'detail' todolist.id %}"><h2>{{ todolist.todolist_text }}</h2></a>
+				 <label>作成日：</label>{{ todolist.list_create_date }}<br/>
+			</p>
+		</div>
+	</div>
+	{% endfor %}
+	<!-- todo list result end -->
+	{% else %}
+	<!-- error start -->
+	<p id="error">
+		対象のTodoリストは見つかりませんでした！
+	</p>
+	<!-- error end -->
+	{% endif %}
+
+{% endblock %}

@@ -1,0 +1,160 @@
+html {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro",Osaka, "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    font-size: 12pt;
+    background-color: #efefef;
+    padding: 10px;
+    margin: 0;
+}
+a {
+    text-decoration: none;
+    color: #20bcd5;
+}
+
+.navbar ul {
+    list-style-type: none;
+    overflow: hidden;
+}
+
+.navbar li {
+     display:inline;
+}
+
+.navbar .title {
+    display: inline-block;
+    color: #20bcd5;
+    text-align: left;
+}
+
+.navbar .search {
+    display: inline-block;
+    padding-top: 15px;
+    color: #20bcd5;
+    text-align: right;
+    float:right;
+
+}
+.copyright {
+    font-size: 8pt;
+    text-align: right;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    color: grey;
+}
+
+.section {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+form {
+    text-align: center;
+    margin-top: 0;
+}
+input {
+    margin-bottom: 10px;
+    font-size: 11pt;
+    padding: 11px 10px 10px;
+    border: 1px solid #cecece;
+    background-color: #efefef;
+    color: #787575;
+    border-radius: 5px;
+    outline: none;
+    width: 80%;
+  }
+.btn {
+    background-color: #20bcd5;
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    cursor: pointer;
+    color: #ffffff;
+    border: none;
+    outline: none;
+    margin: 0;
+    font-weight: bold;
+    font-size: 11pt;
+}
+.btn:hover {
+    background-color: #1a99ad;
+}
+#message {
+    font-weight: bold;
+
+}
+#error {
+    font-weight: bold;
+    color:#d65555;
+    font-size: 10pt;
+}
+h1 {
+    font-size: 20pt;
+    color: #20bcd5;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+}
+h2 {
+    font-size: 15pt;
+    color: #20bcd5;
+    text-align: left;
+    padding: 0 0 0 0;
+    margin: 0 0 10px 0;
+}
+h2#black {
+    color:black;
+}
+ul {
+  list-style-type: none;
+}
+label {
+    display: inline-block;
+    width: 80px;
+    text-align: right;
+    margin: 0;
+}
+
+p.todo_name {
+    font-weight: bold;
+}
+
+.btn.uncompleted {
+    background-color: #d65555;
+    width: 80px;
+}
+.btn.uncompleted:hover {
+    background-color: #ad1111;
+}
+.floating {
+    float:right;
+}
+.btn.completed {
+    width: 80px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
