@@ -1,0 +1,35 @@
+{% extends 'todo/welcome.html' %}
+
+{% block title %}
+	Login
+{% endblock %}
+
+{% block content %}	
+
+	<!-- login start -->
+	<div class="section" id="login">
+		<p id="message"></p>
+		<form action="{% url 'loginuser' %}" method="POST" role="form">
+			{% csrf_token %}
+			<div class="todo_form">
+				<label>ユーザー名 </label>{{ form.username }}<br/>
+
+				<label>パスワード </label>{{ form.password }}<br/>
+
+				<button type="submit" class="btn btn-default">Login</button>
+			</div>
+		</form>
+	</div>
+	<!-- new todo end -->
+	<!-- messages start -->
+	{% if messages %}
+	<ul class="messages">
+	    {% for message in messages %}
+	    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}{% if message.tags == 'error' %} id="error" {% endif %}>{{ message }}</li>
+	    {% endfor %}
+	</ul>
+	{% endif %}
+	<!-- message end -->
+	
+
+{% endblock %}

@@ -2,14 +2,35 @@ from django.shortcuts import render, redirect
 from django.db.models import Avg, Max, Min
 #from django.utils.dateformat import DateFormat
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 
 from . models import ToDo, ToDoList
-from . forms import ToDoListForm, ToDoForm, SearchForm
+from . forms import ToDoListForm, ToDoForm, SearchForm, LoginForm
 
 import datetime
 from datetime import date
+
+
+def login_user(request):
+	username = request.POST['username']
+	password = request.POST['password']
+	user = authenticate(request, username=username, password=password)
+	if user is not None:
+		login(request, user)
+		return redirect('index')
+	else:
+		messages.error(request, 'ユーザー名またはパスワードが間違っている！')
+		return redirect('login')
+
+def myloginpage(request):
+	form = LoginForm()
+	return render(request, 'todo/login.html', { 'form': form })
+
+def logout_user(request):
+	logout(request)
+	return 
 
 def index(request):
 	todolists = ToDoList.objects.annotate(

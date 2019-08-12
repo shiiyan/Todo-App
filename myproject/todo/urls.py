@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('login', views.myloginpage, name='login'),
+    path('loginuser', views.login_user, name='loginuser'),
     path('', views.index, name='index'),
     path('addtodolist', views.addTodolist, name='addtodolist'),
     path('addtodo/<int:todolist_id>/', views.addTodo, name='addtodo'),
