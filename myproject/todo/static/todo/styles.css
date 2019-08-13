@@ -41,6 +41,31 @@ a {
     float:right;
 
 }
+
+.stress_low {
+    display: inline-block;
+    color: #20bcd5 !important;
+    font-size: 13pt;
+    text-align: left;
+
+}
+
+.stress_middle {
+    display: inline-block;
+    color: #f7e123 !important;
+    font-size: 13pt;
+    text-align: left;
+
+}
+
+.stress_high {
+    display: inline-block;
+    color: #e24405 !important;
+    font-size: 13pt;
+    text-align: left;
+
+}
+
 .copyright {
     font-size: 8pt;
     text-align: right;

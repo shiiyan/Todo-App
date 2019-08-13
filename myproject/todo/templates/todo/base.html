@@ -10,10 +10,18 @@
 	<!-- welcomebar start -->
 	<div class="section navbar">
 		{% if user.is_authenticated %}
-		<ul style="padding-left: 0px;">
-			<li><a class="title" href="{% url 'index' %}">Welcome, {{ user.username }}.</a></li>
-			<li><a class="search" href="{% url 'logoutuser' %}">Logout</a></li>
+		<ul style="padding: 0;  margin: 0;">
+			<li><a class="title" href="{% url 'index' %} " style="padding: 0;  margin: 0;">Welcome {{ user.username }}.</a></li>
+			<li><a class="search" href="{% url 'logoutuser' %}" style="padding: 0;  margin: 0;">Logout</a></li>
 		</ul>
+		{% if user.profile.stress_point < 50 %}
+		<p style="color: #20bcd5; padding: 0; margin: 0;">今日のストレスは{{ user.profile.stress_point }}、いい感じ</p>
+		{% elif user.profile.stress_point < 100 %}
+		<p style="color: #f7e123; padding: 0; margin: 0;">今日のストレスは{{ user.profile.stress_point }}、頑張れ</p>
+		{% else %}
+		<p style="color: #e24405; padding: 0; margin: 0;">今日のストレスは{{ user.profile.stress_point }}、スケジュールを調整して</p>
+		{% endif %}
+		
 		{% else %}
 		<ul style="padding-left: 0px;">
 			<li><a class="title" href="{% url 'login' %}"> Welcome. Please Login</a></li>
