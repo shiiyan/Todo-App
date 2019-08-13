@@ -3,8 +3,10 @@ from django.db.models import Avg, Max, Min
 #from django.utils.dateformat import DateFormat
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
+
 
 from . models import ToDo, ToDoList
 from . forms import ToDoListForm, ToDoForm, SearchForm, LoginForm
@@ -30,10 +32,12 @@ def myloginpage(request):
 
 def logout_user(request):
 	logout(request)
-	return 
+	return redirect('login')
 
+
+#@login_required(login_url='/login')
 def index(request):
-	todolists = ToDoList.objects.annotate(
+	todolists = ToDoList.objects.filter(user=request.user).annotate(
 		latest_todo_date=Max('todo__todo_create_date')
 		).order_by('-latest_todo_date')
 	form = ToDoListForm()
@@ -59,11 +63,14 @@ def index(request):
 	}
 	return render(request, 'todo/index.html', context)
 
+#@login_required(login_url='/login')
 def addTodolist(request):
 	form = ToDoListForm(request.POST)
 	if (form.is_valid()) &  (not ToDoList.objects.filter(todolist_text=request.POST['text']).exists()):
 		messages.success(request, '新しいTodoリストが作成されました!')
-		new_todolist = ToDoList(todolist_text=request.POST['text'])
+		new_todolist = ToDoList(
+			todolist_text=request.POST['text'],
+			user=request.user)
 		new_todolist.save()
 		context = {
          	'new_todolist': new_todolist,
@@ -83,6 +90,7 @@ def addTodolist(request):
 		}
 	return render(request, 'todo/addtodolist.html', context)
 
+#@login_required(login_url='/login')
 def detail(request, todolist_id):
 	todolist = ToDoList.objects.get(pk=todolist_id)
 	todolist.num_all = todolist.todo_set.count()
@@ -101,6 +109,7 @@ def detail(request, todolist_id):
 
 	return render(request, 'todo/detail.html', context)
 
+#@login_required(login_url='/login')
 def addTodo(request, todolist_id):
 	form = ToDoForm(request.POST)
 	todolist = ToDoList.objects.get(pk=todolist_id)
@@ -122,6 +131,7 @@ def addTodo(request, todolist_id):
 
 	return HttpResponseRedirect(reverse('detail', args=(todolist.id,)))
 
+#@login_required(login_url='/login')
 def completeTodo(request, todo_id, todolist_id):
 	todolist = ToDoList.objects.get(pk=todolist_id)
 	todo = ToDo.objects.get(pk=todo_id)
@@ -130,6 +140,7 @@ def completeTodo(request, todo_id, todolist_id):
 
 	return HttpResponseRedirect(reverse('detail', args=(todolist.id,)))
 
+#@login_required(login_url='/login')
 def uncompleteTodo(request, todo_id, todolist_id):
 	todolist = ToDoList.objects.get(pk=todolist_id)
 	todo = ToDo.objects.get(pk=todo_id)
@@ -138,6 +149,7 @@ def uncompleteTodo(request, todo_id, todolist_id):
 
 	return HttpResponseRedirect(reverse('detail', args=(todolist.id,)))
 
+#@login_required(login_url='/login')
 def searchpage(request):
 	form = SearchForm()
 
@@ -147,12 +159,19 @@ def searchpage(request):
 
 	return render(request, 'todo/search.html', context)
 
+#@login_required(login_url='/login')
 def result(request):
 	form = SearchForm(request.POST)
 
 	if form.is_valid():
-		todolists=ToDoList.objects.filter(todolist_text__icontains=request.POST['text']).order_by('-list_create_date')
-		todos=ToDo.objects.filter(todo_text__icontains=request.POST['text']).order_by('-todo_create_date')
+		todolists=ToDoList.objects.filter(
+			user=request.user, 
+			todolist_text__icontains=request.POST['text']
+			).order_by('-list_create_date')
+		todos=ToDo.objects.filter(
+			todolist__user=request.user,
+			todo_text__icontains=request.POST['text']
+			).order_by('-todo_create_date')
 		todolist_count=len(todolists)
 		todo_count=len(todos)
 
@@ -166,11 +185,13 @@ def result(request):
 
 	return render(request, 'todo/result.html', context)
 
+#@login_required(login_url='/login')
 def deleteTodolist(request, todolist_id):
 	ToDoList.objects.filter(id__exact=todolist_id).delete()
 
 	return redirect('index')
 
+#@login_required(login_url='/login')
 def deletecompleted(request, todolist_id):
 	todolist = ToDoList.objects.get(pk=todolist_id)
 	todolist.todo_set.filter(complete__exact=True).delete()

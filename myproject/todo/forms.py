@@ -51,7 +51,7 @@ class LoginForm(forms.Form):
 		widget=forms.TextInput(
 			attrs={
 				"name": "password", 
-				"type": "text", 
+				"type": "password", 
 				"placeholder": "パスワードを入力する"
 			}
 		)

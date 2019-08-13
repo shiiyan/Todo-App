@@ -7,11 +7,27 @@
 </head>
 
 <body>
+	<!-- welcomebar start -->
+	<div class="section navbar">
+		{% if user.is_authenticated %}
+		<ul style="padding-left: 0px;">
+			<li><a class="title" href="{% url 'index' %}">Welcome, {{ user.username }}.</a></li>
+			<li><a class="search" href="{% url 'logoutuser' %}">Logout</a></li>
+		</ul>
+		{% else %}
+		<ul style="padding-left: 0px;">
+			<li><a class="title" href="{% url 'login' %}"> Welcome. Please Login</a></li>
+		</ul>
+		{% endif %}
+	</div>
+	<!-- welcomebar end -->
+	
+	{% if user.is_authenticated %}
 	<!-- navbar start -->
 	<div class="section navbar">
 		{% block navbar %}
 		<ul style="padding-left: 0px;">
-			<li><a class="title" href="{% url 'index' %}">Todoリスト</a></li>
+			<li><a class="title" href="{% url 'index' %}">{{ user.username }}のTodoリスト</a></li>
 			<li><a class="search" href="{% url 'searchpage' %}">検索</a></li>
 		</ul>
 		{% endblock %}
@@ -21,6 +37,7 @@
 	<div id="content">
 		{% block content %}{% endblock %}
 	</div>
+	{% endif %}
 
 	<!-- copyright start -->
 	<div id="footer" class="copyright">
