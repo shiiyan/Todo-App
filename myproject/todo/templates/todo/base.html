@@ -7,11 +7,35 @@
 </head>
 
 <body>
+	<!-- welcomebar start -->
+	<div class="section navbar">
+		{% if user.is_authenticated %}
+		<ul style="padding: 0;  margin: 0;">
+			<li><a class="title" href="{% url 'index' %} " style="padding: 0;  margin: 0;">Welcome {{ user.username }}.</a></li>
+			<li><a class="search" href="{% url 'logoutuser' %}" style="padding: 0;  margin: 0;">Logout</a></li>
+		</ul>
+		{% if user.profile.stress_point < 50 %}
+		<p style="color: #20bcd5; padding: 0; margin: 0;">今日のストレスは{{ user.profile.stress_point }}、いい感じ</p>
+		{% elif user.profile.stress_point < 100 %}
+		<p style="color: #f7e123; padding: 0; margin: 0;">今日のストレスは{{ user.profile.stress_point }}、頑張れ</p>
+		{% else %}
+		<p style="color: #e24405; padding: 0; margin: 0;">今日のストレスは{{ user.profile.stress_point }}、スケジュールを調整して</p>
+		{% endif %}
+		
+		{% else %}
+		<ul style="padding-left: 0px;">
+			<li><a class="title" href="{% url 'login' %}"> Welcome. Please Login</a></li>
+		</ul>
+		{% endif %}
+	</div>
+	<!-- welcomebar end -->
+	
+	{% if user.is_authenticated %}
 	<!-- navbar start -->
 	<div class="section navbar">
 		{% block navbar %}
 		<ul style="padding-left: 0px;">
-			<li><a class="title" href="{% url 'index' %}">Todoリスト</a></li>
+			<li><a class="title" href="{% url 'index' %}">{{ user.username }}のTodoリスト</a></li>
 			<li><a class="search" href="{% url 'searchpage' %}">検索</a></li>
 		</ul>
 		{% endblock %}
@@ -21,6 +45,7 @@
 	<div id="content">
 		{% block content %}{% endblock %}
 	</div>
+	{% endif %}
 
 	<!-- copyright start -->
 	<div id="footer" class="copyright">

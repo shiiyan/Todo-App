@@ -1,7 +1,9 @@
 # Todo App
+
 This web applicaiton is designed to help you check out things you want to do. 
 
 ## Built With
+
 Python 3.6 and Django 2.0
 
 ### Libraries 
@@ -11,6 +13,7 @@ Python 3.6 and Django 2.0
 * **Python libraries** - datetime
 
 ## Usage and Design
+
 After creating todo lists, you could add todos under them. 
 You need to give title and deadline to todos before you can create them.
 Each todo has a button that indicates the status whether or not it is completed. 
@@ -20,15 +23,18 @@ First one deletes the todo list this todo belongs to. Second one deletes complet
 Searching for todo lists and todos are also possible by clicking the link on the top-right corner.
 
 ## Set up Development Environment
+
 First, clone this repository from github.
-```
+
+```bash
 git clone https://github.com/shiiyan/Todo-App.git
 ```
+
 After move to the main directory of this app, run
 
-```
+```bash
 cd myproject
 python manage.py runserver
 ```
-and you are ready to go.
 
+and you are ready to go.

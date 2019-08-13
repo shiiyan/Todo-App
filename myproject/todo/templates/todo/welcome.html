@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}Todo App{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="{% static './todo/styles.css' %}">
+</head>
+
+<body>
+    <!-- welcomebar start -->
+	<div class="section navbar">
+        {% if user.is_authenticated %}
+        <ul style="padding-left: 0px;">
+            <li><a class="title" href="{% url 'index' %}">Welcome, {{ user.username }}.</a></li>
+            <li><a class="search" href="{% url 'logoutuser' %}">Logout</a></li>
+        </ul>
+        {% else %}
+        <ul style="padding-left: 0px;">
+            <li><a class="title" href="{% url 'login' %}"> Welcome. Please Login</a></li>
+        </ul>
+        {% endif %}
+    </div>
+    <!-- welcomebar end -->
+	<div id="content">
+		{% block content %}{% endblock %}
+	</div>
+
+	<!-- copyright start -->
+	<div id="footer" class="copyright">
+		{% block copyright %}
+		Copyright &copy; 2018 <strong>Todo App</strong>
+		{% endblock %}
+	</div>
+	<!-- copyright end -->
+</body>
+</html>
